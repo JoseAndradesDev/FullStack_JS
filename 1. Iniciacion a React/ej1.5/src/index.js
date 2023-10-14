@@ -9,16 +9,16 @@ const Header = (props) => {
 
 const Part = (props) => {
   const name = props.name;
-  const excercices = props.excercices;
+  const exercises = props.exercises;
 
-  return <h3>{name} {excercices}</h3>
+  return <h3>{name} {exercises}</h3>
 }
 
 const Content = (props) => {
   const name = props.part.name;
-  const excercices = props.part.excersices;
+  const exercises = props.part.exercises;
 
-  return  <Part name={name} exercises={excercices}/>
+  return  <Part name={name} exercises={exercises}/>
 }
 
 const Total = (props) => {
@@ -26,7 +26,7 @@ const Total = (props) => {
   props.part.forEach(e => {
     total+=e.exercises;
   });
-  return <p>Number of excersices {total}</p> 
+  return <p>Number of exercises {total}</p> 
 }
 
 
@@ -42,7 +42,7 @@ const App = () => {
         },
         {
           name: 'Using props to pass data',
-          exercises: 7
+          exercises: 20
         },
         {
           name: 'State of a component',
