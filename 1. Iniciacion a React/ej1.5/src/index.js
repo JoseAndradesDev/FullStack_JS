@@ -2,23 +2,31 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 const Header = (props) => {
-  return <h1>{props.tittle}</h1>
+  const tittle= props.tittle;
+
+  return <h1>{tittle}</h1>
 }
 
 const Part = (props) => {
-  return <h3>{props.name} {props.exercises}</h3>
+  const name = props.name;
+  const excercices = props.excercices;
+
+  return <h3>{name} {excercices}</h3>
 }
 
 const Content = (props) => {
-  return  <Part name={props.part.name} exercises={props.part.exercises}/>
+  const name = props.part.name;
+  const excercices = props.part.excersices;
+
+  return  <Part name={name} exercises={excercices}/>
 }
 
 const Total = (props) => {
   let total=0;
-  props.part.forEach(element => {
-    total+=element.exercises;
+  props.part.forEach(e => {
+    total+=e.exercises;
   });
-  return <p>Number of excersice {total}</p> 
+  return <p>Number of excersices {total}</p> 
 }
 
 
@@ -44,11 +52,8 @@ const App = () => {
       ]
   }
       
+
   
-  
-
-
-
   return (
     <div>
       <Header tittle={course.tittle} />
