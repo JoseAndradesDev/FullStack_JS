@@ -40,13 +40,24 @@ const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
 const Statistic = ({ text, value }) => <p>{text}{":"}{value}</p>;
 
 
-//Calcula el total y llama a cada registro de estadistica
+//Calcula propiedades y llama a cada registro de estadistica
 const Statistics = ({ clicks }) => {
+  const total = clicks.good + clicks.neutral + clicks.bad;
+  const average = (clicks.good - clicks.bad)/total
+  const positive = (clicks.good*100)/total + " %"
+
+  if (total === 0) {
+    return <div>Porfavor deja una resena</div>;
+  }
+
   return (
     <div>
       <Statistic text="good" value={clicks.good} />
       <Statistic text="neutral" value={clicks.neutral} />
       <Statistic text="bad" value={clicks.bad} />
+      <Statistic text="total" value={total} />
+      <Statistic text="average" value={average} />
+      <Statistic text="positive" value={positive} />
     </div>
   );
 };
