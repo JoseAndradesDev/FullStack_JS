@@ -40,7 +40,7 @@ const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
 const Statistic = ({ text, value }) => <td><p>{text}{":"}{value}</p></td>;
 
 
-//Calcula propiedades y llama a cada registro de estadistica
+//Calcula propiedades y llama a cada registro de estadisticas
 const Statistics = ({ clicks }) => {
   const total = clicks.good + clicks.neutral + clicks.bad;
   const average = ((clicks.good - clicks.bad)/total).toFixed(2)
