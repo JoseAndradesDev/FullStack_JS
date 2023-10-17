@@ -4,6 +4,7 @@ import ReactDOM from "react-dom";
 const App = (props) => {
   //Definicion de los estados
   const [selected, setSelected] = useState(0);
+  const [votos, setVote] = useState(Array(6).fill(0));
   const anecdotes = [
     "A mayor dolor, hazlo más a menudo.",
 "Agregar personal a un proyecto de software atrasado lo retrasa aún más.",
@@ -12,23 +13,51 @@ const App = (props) => {
 "La optimización prematura es la raíz de todo mal.",
 "Depurar es el doble de difícil que escribir el código en primer lugar. Por lo tanto, si escribes el código de la manera más ingeniosa posible, por definición, no eres lo suficientemente inteligente como para depurarlo."
   ];
+
+  
  
   //Evento click, asiga un valor random
-  const click = () => {
+  const next = () => {
     const random = Math.round(Math.random()*5)
     setSelected(random)
   }
 
+  //Eveto click, anade voto a frase seleccionada
+  const clickVote = () => setVote({...votos, [selected]: votos[selected]+1 }) 
+  
+
+  //Renderizado de la aplicacion
   return (
     <div>
-      <h3>{anecdotes[selected]}</h3>
-      <Button onClick={click} text={"siguiente"}/>
+      <Titulo text="Frase aleatoria"/>
+      <Content anecdotes={anecdotes} votos={votos} selected={selected}/>
+      <Button onClick={next} text={"siguiente"}/>
+      <Button onClick={clickVote} text={"votar"}/>
     </div>
     
   )
 };
 
+//Definicion de Componentes
+
+const Titulo = ({text}) => <h3>{text}</h3>
+
+const Content = ({anecdotes, votos, selected}) => {
+  
+  return (
+    
+    <div>
+      <p>{anecdotes[selected]}</p>
+      <p>{votos[selected]}</p>
+    </div>
+    
+  )
+  
+
+}
+
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
+
 
 
 ReactDOM.render(<App/>, document.getElementById("root"));
