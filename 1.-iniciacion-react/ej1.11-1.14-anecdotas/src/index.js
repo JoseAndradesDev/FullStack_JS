@@ -1,26 +1,34 @@
-import React, { useState } from 'react'
-import ReactDOM from 'react-dom'
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
 
 const App = (props) => {
-  const [selected, setSelected] = useState(0)
+  //Definicion de los estados
+  const [selected, setSelected] = useState(0);
+  const anecdotes = [
+    "A mayor dolor, hazlo más a menudo.",
+"Agregar personal a un proyecto de software atrasado lo retrasa aún más.",
+"El primer 90 por ciento del código representa el primer 90 por ciento del tiempo de desarrollo... El 10 por ciento restante del código representa el otro 90 por ciento del tiempo de desarrollo.",
+"Cualquier tonto puede escribir código que una computadora pueda entender. Los buenos programadores escriben código que los humanos pueden entender.",
+"La optimización prematura es la raíz de todo mal.",
+"Depurar es el doble de difícil que escribir el código en primer lugar. Por lo tanto, si escribes el código de la manera más ingeniosa posible, por definición, no eres lo suficientemente inteligente como para depurarlo."
+  ];
+ 
+  //Evento click, asiga un valor random
+  const click = () => {
+    const random = Math.round(Math.random()*5)
+    setSelected(random)
+  }
 
   return (
     <div>
-      {props.anecdotes[selected]}
+      <h3>{anecdotes[selected]}</h3>
+      <Button onClick={click} text={"siguiente"}/>
     </div>
+    
   )
-}
+};
 
-const anecdotes = [
-  'If it hurts, do it more often',
-  'Adding manpower to a late software project makes it later!',
-  'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
-  'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
-  'Premature optimization is the root of all evil.',
-  'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
-]
+const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>;
 
-ReactDOM.render(
-  <App anecdotes={anecdotes} />,
-  document.getElementById('root')
-)
+
+ReactDOM.render(<App/>, document.getElementById("root"));
