@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
-const App = (props) => {
+const App = () => {
   //Definicion de los estados
   const [selected, setSelected] = useState(0);
+  const [mostVoted, setMostVotes] = useState(0);
   const [votos, setVote] = useState(Array(6).fill(0));
+
+  //Data
   const anecdotes = [
     "A mayor dolor, hazlo más a menudo.",
 "Agregar personal a un proyecto de software atrasado lo retrasa aún más.",
@@ -20,10 +23,25 @@ const App = (props) => {
   const next = () => {
     const random = Math.round(Math.random()*5)
     setSelected(random)
+    CalcMostVoted() // renderiza la mas votada siempre que se pase de anecdota
   }
 
   //Eveto click, anade voto a frase seleccionada
-  const clickVote = () => setVote({...votos, [selected]: votos[selected]+1 }) 
+  const clickVote = () => setVote( {...votos, [selected]: votos[selected]+1}/*, CalcMostVoted()*/) //renderiza las anecdotas cuando quiere
+  
+  //Calcular anecdota con mas votos
+  const CalcMostVoted = () => {
+    let max = 0
+
+    for(const voto in votos){
+      if(votos[voto] > max){
+        max = votos[voto]
+        setMostVotes(voto)
+      }
+    }
+    
+
+  }
   
 
   //Renderizado de la aplicacion
@@ -33,6 +51,10 @@ const App = (props) => {
       <Content anecdotes={anecdotes} votos={votos} selected={selected}/>
       <Button onClick={next} text={"siguiente"}/>
       <Button onClick={clickVote} text={"votar"}/>
+
+      <Titulo text="Frase mas votada"/>
+      <Content anecdotes={anecdotes} votos={votos} selected={mostVoted}/>
+
     </div>
     
   )
@@ -48,7 +70,7 @@ const Content = ({anecdotes, votos, selected}) => {
     
     <div>
       <p>{anecdotes[selected]}</p>
-      <p>{votos[selected]}</p>
+      <p>{votos[selected]+" "}votos</p>
     </div>
     
   )
