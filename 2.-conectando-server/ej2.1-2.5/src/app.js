@@ -49,11 +49,12 @@ const App = () => {
       
   ];
 
+   
     return (
       courses.map( ({id, parts, tittle}) => ( 
         <Course key={id}  parts={parts} tittle={tittle} />      
       ))
-      
+
     )
   
   }

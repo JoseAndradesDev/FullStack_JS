@@ -1,5 +1,5 @@
 
-const Header = ({tittle}) => <h3>{tittle}</h3>
+const Header = ({tittle}) => <h2>{tittle}</h2>
 
 const Content = ({parts}) => (
     parts.map(({name, exercises, id}) => <Part key={id} name={name} exercises={exercises} /> ) 
@@ -16,12 +16,13 @@ const Total = ({parts}) => {
     
     
   
-    return <p>Number of exercises {total}</p>;
+    return <p><strong>Number of exercises {total}</strong></p>;
   };
 
 
 
 const Course = ({ parts, tittle}) => {
+   
     
     return (
         <div>
@@ -30,9 +31,6 @@ const Course = ({ parts, tittle}) => {
                 <Content parts={parts}/>
                 <Total parts={parts}/>
             </ul>
-            
-           
-    
         </div>
     );
 };
