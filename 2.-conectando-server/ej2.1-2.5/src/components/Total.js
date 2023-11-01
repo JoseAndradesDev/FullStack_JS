@@ -1,19 +1,12 @@
-const Total = ({parts}) => {
-  let total=0;
+const Total = ({ parts }) => {
+  let total = 0;
 
-  parts.forEach(e => {
-    total+=e.exercises;
-  });
+  parts.reduce((prev, actual) => {
+    total = total + actual.exercises;
+    return total;
+  }, 0);
 
-  return <p>Number of exercises {total}</p> 
-}
+  return <p>Number of exercises {total}</p>;
+};
 
 export default Total;
-
-
-
-
-
-
-
-
