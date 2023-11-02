@@ -3,34 +3,39 @@ import Persons from './components/Persons'
 
 const App = () => {
   const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', number: '954783218' },
+    { name: 'Frank Nuchhelst', number: '602781265' }
   ]) 
   
 
   //Function new person
   const addPerson = (e) => {
     e.preventDefault();
-    let valor = e.target[0].value
-
-    const newPerson = {
-      name: valor
+    let name = e.target[0].value
+    let number = e.target[1].value
+    
+    const personObj= {
+      name: name,
+      number:  number
     }
 
     const isNewName = persons.find( (person) => (
-      person.name.toLocaleLowerCase() === newPerson.name.toLocaleLowerCase()
+      person.name.toLocaleLowerCase() === personObj.name.toLocaleLowerCase()
+    ));
+
+    const isNewNumber = persons.find( (person) => (
+      person.number === personObj.number
     ));
     
-    if(!isNewName){
-      setPersons([...persons, newPerson])
-      e.target[0].value = ''
-    }else{
-      alert(newPerson.name+' ya existe en la agenda')
-    }
-      
-    
-   
-   
-    
+    if(!isNewName && !isNewNumber){
+      setPersons([...persons, personObj])
+    }if(isNewName){
+      alert(personObj.name+' ya existe en la agenda')
+    }if(isNewNumber)(
+      alert('El numero '+personObj.number+' ya esta registrado en la agenda')
+    )
+    e.target[0].value = ''
+    e.target[1].value = ''
   }
 
 
@@ -40,7 +45,10 @@ const App = () => {
       <h2>Phonebook</h2>
       <form onSubmit={addPerson}>
         <div>
-          name: <input />
+          name: <input required/>
+        </div>
+        <div>
+          number: <input required/>
         </div>
         <div>
           <button type="submit">add</button>
