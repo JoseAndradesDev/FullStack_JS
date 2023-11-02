@@ -11,13 +11,25 @@ const App = () => {
   const addPerson = (e) => {
     e.preventDefault();
     let valor = e.target[0].value
-    
+
     const newPerson = {
       name: valor
     }
+
+    const isNewName = persons.find( (person) => (
+      person.name.toLocaleLowerCase() === newPerson.name.toLocaleLowerCase()
+    ));
+    
+    if(!isNewName){
+      setPersons([...persons, newPerson])
+      e.target[0].value = ''
+    }else{
+      alert(newPerson.name+' ya existe en la agenda')
+    }
+      
+    
    
-    setPersons([...persons, newPerson])
-    e.target[0].value = ''
+   
     
   }
 
