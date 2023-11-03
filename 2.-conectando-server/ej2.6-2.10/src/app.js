@@ -1,18 +1,21 @@
 import React, { useState } from 'react'
 import Persons from './components/Persons'
+import Filter from './components/Filter'
 
 const App = () => {
   const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas', number: '954783218' },
-    { name: 'Frank Nuchhelst', number: '602781265' }
+    { name: 'Arto Hellas', number: '040-123456' },
+    { name: 'Ada Lovelace', number: '39-44-5323523' },
+    { name: 'Dan Abramov', number: '12-43-234345' },
+    { name: 'Mary Poppendieck', number: '39-23-6423122' }
   ]) 
-  
-
+  let filtro = ""
+ 
   //Function new person
   const addPerson = (e) => {
     e.preventDefault();
-    let name = e.target[0].value
-    let number = e.target[1].value
+    let name = e.target[1].value
+    let number = e.target[2].value
     
     const personObj= {
       name: name,
@@ -34,9 +37,36 @@ const App = () => {
     }if(isNewNumber)(
       alert('El numero '+personObj.number+' ya esta registrado en la agenda')
     )
-    e.target[0].value = ''
     e.target[1].value = ''
+    e.target[2].value = ''
+    
+    console.log(name, number)
   }
+
+  const personToShow = (filtro) => {
+   
+    if(filtro===''){
+      console.log('vacio');
+    }else{
+      console.log(filtro);
+    }
+}
+
+//Declarar filtro vacio
+  personToShow(filtro)
+
+
+  const newFilter = (e) => {
+    filtro = e.target.value 
+    
+    personToShow(filtro)
+  }
+
+ 
+
+  
+
+
 
 
   return (
@@ -44,6 +74,7 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <form onSubmit={addPerson}>
+        <Filter newFilter={newFilter}/>
         <div>
           name: <input required/>
         </div>
