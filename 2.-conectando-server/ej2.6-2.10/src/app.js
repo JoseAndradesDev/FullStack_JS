@@ -3,13 +3,16 @@ import Persons from './components/Persons'
 import Filter from './components/Filter'
 
 const App = () => {
+  //Declaracion de estados 
   const [ persons, setPersons ] = useState([
     { name: 'Arto Hellas', number: '040-123456' },
     { name: 'Ada Lovelace', number: '39-44-5323523' },
     { name: 'Dan Abramov', number: '12-43-234345' },
     { name: 'Mary Poppendieck', number: '39-23-6423122' }
   ]) 
-  let filtro = ""
+  const [filtro, setFilter] = useState('')
+  let filterPersons = []
+
  
   //Function new person
   const addPerson = (e) => {
@@ -40,32 +43,26 @@ const App = () => {
     e.target[1].value = ''
     e.target[2].value = ''
     
-    console.log(name, number)
   }
 
-  const personToShow = (filtro) => {
+  //Renderizar personas Agenda
+  const personToShow = (filtro, filterPersons) => {
    
     if(filtro===''){
-      console.log('vacio');
+     filterPersons = persons;
     }else{
-      console.log(filtro);
+     filterPersons = persons.filter(person => person.name.toLocaleLowerCase().indexOf(filtro.toLocaleLowerCase()) > -1);
     }
-}
-
-//Declarar filtro vacio
-  personToShow(filtro)
-
-
-  const newFilter = (e) => {
-    filtro = e.target.value 
-    
-    personToShow(filtro)
+    return filterPersons
   }
-
- 
-
   
 
+
+  //Evento onChange filtro
+  const newFilter = (e) => {
+    setFilter(e.target.value)
+  }
+ 
 
 
 
@@ -87,7 +84,7 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       
-      <Persons personsToShow={persons}/>
+      <Persons personsToShow={personToShow(filtro,filterPersons)}/>
       
     </div>
     
