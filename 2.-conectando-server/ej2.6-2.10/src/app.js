@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
+import Form from './components/Form'
 
 const App = () => {
   //Declaracion de estados 
@@ -13,18 +14,18 @@ const App = () => {
   const [filtro, setFilter] = useState('')
   let filterPersons = []
 
- 
-  //Function new person
+  //Evento onSubmit New Person
   const addPerson = (e) => {
     e.preventDefault();
-    let name = e.target[1].value
-    let number = e.target[2].value
+    let name = e.target[0].value
+    let number = e.target[1].value
+    
     
     const personObj= {
       name: name,
       number:  number
     }
-
+   
     const isNewName = persons.find( (person) => (
       person.name.toLocaleLowerCase() === personObj.name.toLocaleLowerCase()
     ));
@@ -40,11 +41,14 @@ const App = () => {
     }if(isNewNumber)(
       alert('El numero '+personObj.number+' ya esta registrado en la agenda')
     )
+    e.target[0].value = ''
     e.target[1].value = ''
-    e.target[2].value = ''
     
   }
-
+  //Evento onChange filtro
+  const newFilter = (e) => {
+    setFilter(e.target.value)
+  }
   //Renderizar personas Agenda
   const personToShow = (filtro, filterPersons) => {
    
@@ -56,40 +60,14 @@ const App = () => {
     return filterPersons
   }
   
-
-
-  //Evento onChange filtro
-  const newFilter = (e) => {
-    setFilter(e.target.value)
-  }
- 
-
-
-
   return (
-    
     <div>
-      <h2>Phonebook</h2>
-      <form onSubmit={addPerson}>
-        <Filter newFilter={newFilter}/>
-        <div>
-          name: <input required/>
-        </div>
-        <div>
-          number: <input required/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      
-      <Persons personsToShow={personToShow(filtro,filterPersons)}/>
-      
+      <h2>Agenda telefonica</h2>
+      <Filter newFilter={newFilter}/>
+      <Form addPerson={addPerson}/>
+      <Persons personsToShow={personToShow(filtro,filterPersons)}/> 
     </div>
-    
   )
-  
 }
 
 export default App

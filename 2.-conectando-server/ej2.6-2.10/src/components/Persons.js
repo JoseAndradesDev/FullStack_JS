@@ -2,8 +2,8 @@ const Persons = ({personsToShow}) => {
     
 return (
     <div>
-        {personsToShow.map((person) => (
-            <div key={person.name}>{person.name+" "}<strong>{" - "+person.number}</strong></div>
+        {personsToShow.map(({name, number}) => (
+            <div key={name}>{name+" "}<strong>{" - "+number}</strong></div>
         ))}
     </div>
 )
