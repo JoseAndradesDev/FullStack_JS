@@ -1,18 +1,31 @@
-import React, { useState } from 'react'
-import Persons from './components/Persons'
-import Filter from './components/Filter'
-import Form from './components/Form'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+//Components
+import Persons from './components/Persons';
+import Filter from './components/Filter';
+import Form from './components/Form';
+
 
 const App = () => {
   //Declaracion de estados 
-  const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas', number: '040-123456' },
-    { name: 'Ada Lovelace', number: '39-44-5323523' },
-    { name: 'Dan Abramov', number: '12-43-234345' },
-    { name: 'Mary Poppendieck', number: '39-23-6423122' }
-  ]) 
+  const [ persons, setPersons ] = useState([]) 
   const [filtro, setFilter] = useState('')
   let filterPersons = []
+
+  useEffect(()=> {
+     // Realizar la solicitud GET usando axios
+     axios.get('http://localhost:3001/persons')
+     .then(response => {
+       // Manipular los datos y establecerlos en el estado
+       setPersons(response.data);
+     })
+     .catch(error => {
+       console.error('Error fetching data:', error);
+     });
+    
+  },[])
+
 
   //Evento onSubmit New Person
   const addPerson = (e) => {
