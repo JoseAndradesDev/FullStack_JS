@@ -39,12 +39,15 @@ const App = () => {
     }
   };
 
+
+ 
+
   return (
     <div>
       <h2>MapaMundiWiki.com</h2>
 
       <Filter newFilter={newFilter} />
-      <Content countries={filterCountries} />
+      <Content countries={filterCountries} setFilterCountries={setFilterCountries} />
     </div>
   );
 };
