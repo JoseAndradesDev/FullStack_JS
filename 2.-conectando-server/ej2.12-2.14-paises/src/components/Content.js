@@ -10,7 +10,7 @@ const Content = ({ countries }) => {
      return (
         <div>
           {countries.map((country, i) =>
-            <p key={i}>{country.name.official}</p>
+            <p key={i}>{country.name.common}</p>
           )}
         </div>
       )
