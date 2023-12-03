@@ -20,7 +20,7 @@ const Countrie = ({countrie}) => {
       <p>Languages: </p>
       <ul>
       {Object.entries(languages).map(([code, name]) => (
-          <li key={code}><strong>{name}</strong> </li>
+          <li key={code}> {name}</li>
         ))}
       </ul>
       <img src={flag} alt="Country flag"></img>
