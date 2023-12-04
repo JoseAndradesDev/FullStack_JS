@@ -31,6 +31,7 @@ const Countrie = ({countrie}) => {
       <img src={flag} alt="Country flag"></img>
       <h2>{continent}</h2>
       <p><strong>{subregion}</strong></p>
+      <p>Capital: {capital}</p>
       <p>Area: {area} Km2 </p>
       <p>Population: {population} habitans</p>
       <p>Languages: </p>
@@ -39,7 +40,7 @@ const Countrie = ({countrie}) => {
           <li key={code}> {name}</li>
         ))}
       </ul>
-      <p>Capital: {capital}</p>
+      
       <p>Weather in {capital} : </p>
       <ul>
         <li>Temperature: {weather.temperature}</li>
