@@ -31,17 +31,17 @@ const Countrie = ({countrie}) => {
       <img src={flag} alt="Country flag"></img>
       <h2>{continent}</h2>
       <p><strong>{subregion}</strong></p>
-      <p>Capital: {capital}</p>
-      <p>Area: {area} Km2 </p>
-      <p>Population: {population} habitans</p>
-      <p>Languages: </p>
+      <p><strong>Capital: </strong>{capital}</p>
+      <p><strong>Area: </strong>{area} Km2 </p>
+      <p><strong>Population: </strong>{population} habitans</p>
+      <p><strong>Languages: </strong></p>
       <ul>
       {Object.entries(languages).map(([code, name]) => (
           <li key={code}> {name}</li>
         ))}
       </ul>
       
-      <p>Weather in {capital} : </p>
+      <strong><p>Weather in {capital} : </p></strong>
       <ul>
         <li>Temperature: {weather.temperature}</li>
         <li>Wind Speed: {weather.wind}</li>
