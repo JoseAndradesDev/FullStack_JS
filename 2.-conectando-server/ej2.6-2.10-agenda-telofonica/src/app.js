@@ -50,11 +50,9 @@ const App = () => {
 
     //Si pasamos la validacion creamos el obj en la bd
     if (!isNewName && !isNewNumber) {
-      personService
-        .create(personObj)
-        .then(lastPerson => {
-         setPersons(persons.concat(lastPerson))
-        })
+      personService.create(personObj).then((lastPerson) => {
+        setPersons(persons.concat(lastPerson));
+      });
     }
     if (isNewName) {
       alert(personObj.name + " ya existe en la agenda");
@@ -65,6 +63,18 @@ const App = () => {
       );
     e.target[0].value = "";
     e.target[1].value = "";
+  };
+
+  const deletePerson = (id) => {
+    const selectedPerson = persons.filter((person) => person.id === id);
+    const personName = selectedPerson[0].name;
+    const personId = selectedPerson[0].id;
+    if (window.confirm(`Delete ${personName} ?`)) {
+      personService.remove(personId);
+      console.log(`${personName} successfully deleted`);
+
+      setPersons(persons.filter((person) => person.id !== personId));
+    }
   };
 
   //Evento onChange filtro
@@ -89,17 +99,20 @@ const App = () => {
   return (
     <div>
       <h2>Agenda Telefonica</h2>
-      <h3>
+      <p>
         <strong>New Contact</strong>
-      </h3>
+      </p>
       <Form addPerson={addPerson} />
       <br></br>
-      <h3>
+      <p>
         <strong>Contact's List: </strong>
-      </h3>
+      </p>
       <Filter newFilter={newFilter} />
       <br></br>
-      <Persons personsToShow={personToShow(filtro, filterPersons)} />
+      <Persons
+        personsToShow={personToShow(filtro, filterPersons)}
+        deletePerson={deletePerson}
+      />
     </div>
   );
 };
