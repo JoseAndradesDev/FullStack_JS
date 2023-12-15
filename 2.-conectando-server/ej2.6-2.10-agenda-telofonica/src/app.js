@@ -60,7 +60,7 @@ const App = () => {
 
       if (isNewNumber)
       alert(
-        "El numero " + personObj.number + " ya esta registrado en la agenda como"
+        "El numero " + personObj.number + " ya esta registrado en la agenda"
       );
 
       if (resultadoConfirm) {
