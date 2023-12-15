@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
 //Components
 import Persons from "./components/Persons";
@@ -16,11 +15,10 @@ const App = () => {
 
   useEffect(() => {
     // Realizar la solicitud GET usando axios
-    axios
-      .get("http://localhost:3001/persons")
-      .then((response) => {
-        // Manipular los datos y establecerlos en el estado
-        setPersons(response.data);
+    personService
+      .getAll()
+      .then((initialPersons) => {
+        setPersons(initialPersons);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -55,12 +53,28 @@ const App = () => {
       });
     }
     if (isNewName) {
-      alert(personObj.name + " ya existe en la agenda");
-    }
-    if (isNewNumber)
-      alert(
-        "El numero " + personObj.number + " ya esta registrado en la agenda"
+      const resultadoConfirm = window.confirm(
+        personObj.name +
+          " ya existe en la agenda, quieres actualizar su numero?"
       );
+
+      if (isNewNumber)
+      alert(
+        "El numero " + personObj.number + " ya esta registrado en la agenda como"
+      );
+
+      if (resultadoConfirm) {
+        const person = persons.find( (person) => person.name.toLocaleLowerCase() === personObj.name.toLocaleLowerCase())
+        //console.log("cambiar " + personObj.name + " nuevo numero - " + personObj.number + ' con id ='+person.id);
+        personService.update(person.id, personObj).then((editedPerson) => {
+          setPersons(persons.map(personItem => personItem.id !== editedPerson.id ? personItem : editedPerson))
+        });
+      } else {
+        alert("Actualizacion cancelada");
+      }
+      //
+    }
+    
     e.target[0].value = "";
     e.target[1].value = "";
   };
@@ -71,8 +85,6 @@ const App = () => {
     const personId = selectedPerson[0].id;
     if (window.confirm(`Delete ${personName} ?`)) {
       personService.remove(personId);
-      console.log(`${personName} successfully deleted`);
-
       setPersons(persons.filter((person) => person.id !== personId));
     }
   };
