@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import Persons from "./components/Persons";
 import Filter from "./components/Filter";
 import Form from "./components/Form";
+import Alert from "./components/Alert"
+
 //Services
 import personService from "./services/persons";
 
@@ -11,6 +13,7 @@ const App = () => {
   //Declaracion de estados
   const [persons, setPersons] = useState([]);
   const [filtro, setFilter] = useState("");
+  const [mensaje, setMensaje] = useState(null)
   let filterPersons = [];
 
   useEffect(() => {
@@ -24,6 +27,8 @@ const App = () => {
         console.error("Error fetching data:", error);
       });
   }, []);
+
+  
 
   //Evento onSubmit New Person
   const addPerson = (e) => {
@@ -49,7 +54,13 @@ const App = () => {
     //Si pasamos la validacion creamos el obj en la bd
     if (!isNewName && !isNewNumber) {
       personService.create(personObj).then((lastPerson) => {
-        setPersons(persons.concat(lastPerson));
+        setPersons(persons.concat(lastPerson))
+        setMensaje(
+          `${personObj.name}  guardad@ como nuevo contacto con exito`
+        )
+        setTimeout(() => {
+          setMensaje(null)
+        }, 5000)
       });
     }
     if (isNewName) {
@@ -68,6 +79,11 @@ const App = () => {
         //console.log("cambiar " + personObj.name + " nuevo numero - " + personObj.number + ' con id ='+person.id);
         personService.update(person.id, personObj).then((editedPerson) => {
           setPersons(persons.map(personItem => personItem.id !== editedPerson.id ? personItem : editedPerson))
+          setMensaje( `El contacto ${editedPerson.name} fue actualizado con exito`)
+          setTimeout(() => {
+            setMensaje(null)
+          }, 5000)
+          
         });
       } else {
         alert("Actualizacion cancelada");
@@ -86,6 +102,12 @@ const App = () => {
     if (window.confirm(`Delete ${personName} ?`)) {
       personService.remove(personId);
       setPersons(persons.filter((person) => person.id !== personId));
+      setMensaje(
+        `${personName} eliminado de la lista de contactos con exito`
+      )
+      setTimeout(() => {
+        setMensaje(null)
+      }, 5000)
     }
   };
 
@@ -109,16 +131,17 @@ const App = () => {
   };
 
   return (
-    <div>
-      <h2>Agenda Telefonica</h2>
-      <p>
+    <div className="content">
+      <h1>Agenda Telefonica</h1>
+      <h3>
         <strong>New Contact</strong>
-      </p>
+      </h3>
+      <Alert mensaje={mensaje}/>
       <Form addPerson={addPerson} />
       <br></br>
-      <p>
+      <h3>
         <strong>Contact's List: </strong>
-      </p>
+      </h3>
       <Filter newFilter={newFilter} />
       <br></br>
       <Persons
