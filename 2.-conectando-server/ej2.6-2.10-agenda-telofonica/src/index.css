@@ -16,13 +16,25 @@ code {
 .content{
   padding-left: 20px;
 }
+div{
+  color:#022222;
+}
 
 .exito{
   max-width:max-content;
   color: #008000;
   background: #82eb9c;
   padding: 15px;
-  margin: 30px;
+  margin: 25px;
+  margin-left: 0px;
+}
+
+.error{
+  max-width:max-content;
+  color: #aa2218;
+  background: #470907;
+  padding: 15px;
+  margin: 25px;
   margin-left: 0px;
 }
 

@@ -56,35 +56,44 @@ const App = () => {
       personService.create(personObj).then((lastPerson) => {
         setPersons(persons.concat(lastPerson))
         setMensaje(
-          `${personObj.name}  guardad@ como nuevo contacto con exito`
+          `${lastPerson.name}  guardad@ como nuevo contacto con exito`
         )
         setTimeout(() => {
           setMensaje(null)
-        }, 5000)
-      });
+        }, 4000)
+      })
     }
+    
+    if (isNewNumber)
+    alert(
+      "El numero " + personObj.number + " ya esta registrado en la agenda"
+    );
+
     if (isNewName) {
       const resultadoConfirm = window.confirm(
         personObj.name +
           " ya existe en la agenda, quieres actualizar su numero?"
       );
 
-      if (isNewNumber)
-      alert(
-        "El numero " + personObj.number + " ya esta registrado en la agenda"
-      );
-
       if (resultadoConfirm) {
         const person = persons.find( (person) => person.name.toLocaleLowerCase() === personObj.name.toLocaleLowerCase())
-        //console.log("cambiar " + personObj.name + " nuevo numero - " + personObj.number + ' con id ='+person.id);
         personService.update(person.id, personObj).then((editedPerson) => {
           setPersons(persons.map(personItem => personItem.id !== editedPerson.id ? personItem : editedPerson))
           setMensaje( `El contacto ${editedPerson.name} fue actualizado con exito`)
           setTimeout(() => {
             setMensaje(null)
+          }, 4000)
+        })
+        .catch((error) => {
+          console.log(error)
+          setPersons(persons.filter(personItem => personItem.id !== person.id))
+          setMensaje(
+            `[ERROR]: 404 user not found / ${personObj.name} no existe en la base de datos del servidor`
+          )
+          setTimeout(() => {
+            setMensaje(null)
           }, 5000)
-          
-        });
+        })
       } else {
         alert("Actualizacion cancelada");
       }
@@ -107,7 +116,7 @@ const App = () => {
       )
       setTimeout(() => {
         setMensaje(null)
-      }, 5000)
+      }, 4000)
     }
   };
 
@@ -133,10 +142,11 @@ const App = () => {
   return (
     <div className="content">
       <h1>Agenda Telefonica</h1>
+      <Alert mensaje={mensaje}/>
       <h3>
         <strong>New Contact</strong>
       </h3>
-      <Alert mensaje={mensaje}/>
+      
       <Form addPerson={addPerson} />
       <br></br>
       <h3>
